@@ -4,7 +4,7 @@ Flutter, TDD, Clean Architecture, SOLID e Design Patterns
 
 ## Descrição do Projeto
 
-<p align="center">Nesse repository irei demonstrar na prática  um aplicativo com Flutter seguindo as melhores metodologias do mercado  como: Design Patterns, Clean Architecture, SOLID, DRY, KISS, YAGNI, SoC, TDD, DDD, BDD. O objetivo desse repository é compartilha e treinar meus conhecimentos.</p>
+<p align="center">Nesse repositorio irei demonstrar na prática  um aplicativo com Flutter seguindo as melhores metodologias do mercado  como: Design Patterns, Clean Architecture, SOLID, DRY, KISS, YAGNI, SoC, TDD, DDD, BDD. O objetivo desse repositorio é compartilha e treinar meus conhecimentos.</p>
 
 
 <h4 align="center"> 
