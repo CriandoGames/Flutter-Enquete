@@ -30,13 +30,13 @@ Flutter, TDD, Clean Architecture, SOLID e Design Patterns
 ### Autor
 ---
 
-<a href="https://blog.rocketseat.com.br/author/thiago/">
+<a href="###">
  <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/14837643?s=96&v=4" width="100px;" alt=""/>
  <br />
- <sub><b>Thiago Marinho</b></sub></a> <a href="https://blog.rocketseat.com.br/author/thiago//" title="Rocketseat">🚀</a>
+ <sub><b>Carlos Castro/b></sub></a> <a href="###" title="">🚀</a>
 
 
-Feito com ❤️ por Thiago Marinho 👋🏽 Entre em contato!
+Feito com ❤️ por Carlos Castro 👋🏽 Entre em contato!
 
 [![Twitter Badge](https://img.shields.io/badge/-@tgmarinho-1ca0f1?style=flat-square&labelColor=1ca0f1&logo=twitter&logoColor=white&link=https://twitter.com/)](https://twitter.com/) 
 [![Gmail Badge](https://img.shields.io/badge/-tgmarinho@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:tgmarinho@gmail.com)](mailto:carloscastrogames@gmail.com)
