@@ -51,3 +51,8 @@ Feito com ❤️ por Carlos Castro 👋🏽 Entre em contato!
 [![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/carlos-castro-07031692/)](https://www.linkedin.com/in/carlos-castro-07031692/)
 [![Gmail Badge](https://img.shields.io/badge/-Gmail-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:carloscastrogames@gmail.com)](mailto:carloscastrogames@gmail.com)
 [![Instagram Badge](https://img.shields.io/badge/-Instagram-C13584?style=flat-square&labelColor=C13584&logo=instagram&logoColor=white&link=https://www.instagram.com/codepwr/)](https://www.instagram.com/llcarloscastroll/)
+  
+  
+  ## 📝 Licença
+
+Este projeto esta sobe a licença [MIT](./LICENSE.txt).
