@@ -13,7 +13,7 @@ Flutter, TDD, Clean Architecture, SOLID e Design Patterns
 
 ### Features
 
-- [x]  Login
+- [ ]  Login
 - [ ]  Cadastro
 - [ ] Cadastro de cliente
 - [ ] Lista de Enquetes
@@ -21,6 +21,15 @@ Flutter, TDD, Clean Architecture, SOLID e Design Patterns
 - [ ] Resultado da Enquete
 - [ ] multi-idioma.
 
+### Features test
+
+- [ ]  Login
+- [ ]  Cadastro
+- [ ] Cadastro de cliente
+- [ ] Lista de Enquetes
+- [ ] Responder uma Enquete
+- [ ] Resultado da Enquete
+- [ ] multi-idioma.
 
 ### 🛠 Tecnologias
 - [Flutter](https://flutter.dev/)
