@@ -64,7 +64,7 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('shuld throw InvalidCredentialsError  if httpClient return 401',
+  test('shuld throw InvalidCredentialsError if httpClient return 401',
       () async {
     mockRequest().thenThrow(HttpError.unauthorized);
 
