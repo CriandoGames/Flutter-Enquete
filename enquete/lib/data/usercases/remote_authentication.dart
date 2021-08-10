@@ -1,4 +1,4 @@
-import 'package:enquete/domain/entities/entities.dart';
+import 'package:enquete/domain/helpers/helpers.dart';
 
 import '../../domain/usercases/usercases.dart';
 
@@ -9,11 +9,18 @@ class RemoteAuthentication {
   final String url;
 
   const RemoteAuthentication({required this.httpClient, required this.url});
+
   Future<void> auth(AutenticationParams params) async {
-    await httpClient.request(
-        url: url,
-        method: 'post',
-        body: RemoteAutenticationParams.fromDomain(params).toJson());
+    final body =  RemoteAutenticationParams.fromDomain(params).toJson();
+    try {
+      await httpClient.request(
+          url: url,
+          method: 'post',
+          body:body); 
+    } catch (e) {
+
+      throw DomainError.unexpected;
+    }
   }
 }
 
