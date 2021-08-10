@@ -52,12 +52,24 @@ void main() {
 
 
     test('shuld throw UnexpectedError if httpClient return 404', () async {
-
-  
     when(httpClient.request(
         url: anyNamed('url'),
         method:  anyNamed('method'),
         body: anyNamed('body'))).thenThrow(HttpError.notFound);
+
+    final params = AutenticationParams(
+        email: faker.internet.email(), password: faker.internet.password());
+    final future =  sut.auth(params);
+
+    expect(future, throwsA(DomainError.unexpected));
+
+  });
+
+     test('shuld throw UnexpectedError if httpClient return 500', () async {
+    when(httpClient.request(
+        url: anyNamed('url'),
+        method:  anyNamed('method'),
+        body: anyNamed('body'))).thenThrow(HttpError.serverError);
 
     final params = AutenticationParams(
         email: faker.internet.email(), password: faker.internet.password());

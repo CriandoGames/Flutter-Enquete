@@ -7,12 +7,12 @@
 4. Sistema entrega dados da conta do usuário
 
 # Exeção - URL inválida 
-1. Sistema retorna uma mensagem de erro inesperado
+1.✅ Sistema retorna uma mensagem de erro inesperado
 
 # Execeção - Dados inválidos
 1.✅ Sistema Retorna uma Mensagem de erro inesperado
 
 # Exeção - Resposta inválida
-1.Sistema Retorna ma menssagem de erro inesperado
+1.✅ Sistema Retorna ma menssagem de erro inesperado
 
 # Exeção - Falha no Servidor
