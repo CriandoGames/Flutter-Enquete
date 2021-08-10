@@ -11,15 +11,13 @@ class RemoteAuthentication {
   const RemoteAuthentication({required this.httpClient, required this.url});
 
   Future<void> auth(AutenticationParams params) async {
-    final body =  RemoteAutenticationParams.fromDomain(params).toJson();
+    final body = RemoteAutenticationParams.fromDomain(params).toJson();
     try {
-      await httpClient.request(
-          url: url,
-          method: 'post',
-          body:body); 
-    } catch (e) {
-
-      throw DomainError.unexpected;
+      await httpClient.request(url: url, method: 'post', body: body);
+    } on HttpError catch (error) {
+      throw error == HttpError.unauthorized
+          ? DomainError.invalidCredentials
+          : DomainError.unexpected;
     }
   }
 }

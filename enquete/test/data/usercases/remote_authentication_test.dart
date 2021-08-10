@@ -2,7 +2,6 @@ import 'package:faker/faker.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-
 import 'package:enquete/domain/helpers/helpers.dart';
 import 'package:enquete/domain/usercases/usercases.dart';
 
@@ -35,47 +34,58 @@ void main() {
         body: {'email': params.email, 'password': params.password}));
   });
   test('shuld throw UnexpectedError if httpClient return 400', () async {
-
-  
     when(httpClient.request(
-        url: anyNamed('url'),
-        method:  anyNamed('method'),
-        body: anyNamed('body'))).thenThrow(HttpError.badRequest);
+            url: anyNamed('url'),
+            method: anyNamed('method'),
+            body: anyNamed('body')))
+        .thenThrow(HttpError.badRequest);
 
     final params = AutenticationParams(
         email: faker.internet.email(), password: faker.internet.password());
-    final future =  sut.auth(params);
+    final future = sut.auth(params);
 
     expect(future, throwsA(DomainError.unexpected));
-
   });
 
-
-    test('shuld throw UnexpectedError if httpClient return 404', () async {
+  test('shuld throw UnexpectedError if httpClient return 404', () async {
     when(httpClient.request(
-        url: anyNamed('url'),
-        method:  anyNamed('method'),
-        body: anyNamed('body'))).thenThrow(HttpError.notFound);
+            url: anyNamed('url'),
+            method: anyNamed('method'),
+            body: anyNamed('body')))
+        .thenThrow(HttpError.notFound);
 
     final params = AutenticationParams(
         email: faker.internet.email(), password: faker.internet.password());
-    final future =  sut.auth(params);
+    final future = sut.auth(params);
 
     expect(future, throwsA(DomainError.unexpected));
-
   });
 
-     test('shuld throw UnexpectedError if httpClient return 500', () async {
+  test('shuld throw UnexpectedError if httpClient return 500', () async {
     when(httpClient.request(
-        url: anyNamed('url'),
-        method:  anyNamed('method'),
-        body: anyNamed('body'))).thenThrow(HttpError.serverError);
+            url: anyNamed('url'),
+            method: anyNamed('method'),
+            body: anyNamed('body')))
+        .thenThrow(HttpError.serverError);
 
     final params = AutenticationParams(
         email: faker.internet.email(), password: faker.internet.password());
-    final future =  sut.auth(params);
+    final future = sut.auth(params);
 
     expect(future, throwsA(DomainError.unexpected));
+  });
 
+  test('shuld throw InvalidCredentialsError  if httpClient return 401', () async {
+    when(httpClient.request(
+            url: anyNamed('url'),
+            method: anyNamed('method'),
+            body: anyNamed('body')))
+        .thenThrow(HttpError.unauthorized);
+
+    final params = AutenticationParams(
+        email: faker.internet.email(), password: faker.internet.password());
+    final future = sut.auth(params);
+
+    expect(future, throwsA(DomainError.invalidCredentials));
   });
 }

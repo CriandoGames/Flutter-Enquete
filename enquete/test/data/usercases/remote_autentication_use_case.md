@@ -6,13 +6,14 @@
 3. Sistema valida os dados recebidos da API
 4. Sistema entrega dados da conta do usuário
 
-# Exeção - URL inválida 
+# Exceção - URL inválida 
 1.✅ Sistema retorna uma mensagem de erro inesperado
 
-# Execeção - Dados inválidos
+# Exceção - Dados inválidos
 1.✅ Sistema Retorna uma Mensagem de erro inesperado
 
-# Exeção - Resposta inválida
-1.✅ Sistema Retorna ma menssagem de erro inesperado
+# Exceção - Resposta inválida
+1.✅ Sistema Retorna ma mensagem de erro inesperado
 
-# Exeção - Falha no Servidor
+# Exceção - Falha no Servidor
+1.✅ Sistema retorna uma mensagem de error informado que as credenciais estão erradas 
