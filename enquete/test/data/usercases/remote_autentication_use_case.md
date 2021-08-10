@@ -3,7 +3,7 @@
 # Caso de Sucesso
 1. ✅  Sistema Valida os Dados
 2. ✅  Sistema faz requisicão para a Url da API do login
-3. Sistema valida os dados recebidos da API
+3. ✅  Sistema valida os dados recebidos da API
 4. Sistema entrega dados da conta do usuário
 
 # Exceção - URL inválida 
