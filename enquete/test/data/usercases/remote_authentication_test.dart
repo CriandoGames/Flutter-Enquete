@@ -1,3 +1,4 @@
+import 'package:enquete/domain/entities/entities.dart';
 import 'package:faker/faker.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -24,8 +25,13 @@ void main() {
   });
 
   test('shuld call httpClient with correct value', () async {
-    final params = AutenticationParams(
-        email: faker.internet.email(), password: faker.internet.password());
+    when(httpClient.request(
+            url: anyNamed('url'),
+            method: anyNamed('method'),
+            body: anyNamed('body')))
+        .thenAnswer((_) async =>
+            {'accessToken': faker.guid.guid(), 'name': faker.person.name()});
+
     await sut.auth(params);
 
     verify(httpClient.request(
@@ -40,8 +46,6 @@ void main() {
             body: anyNamed('body')))
         .thenThrow(HttpError.badRequest);
 
-    final params = AutenticationParams(
-        email: faker.internet.email(), password: faker.internet.password());
     final future = sut.auth(params);
 
     expect(future, throwsA(DomainError.unexpected));
@@ -54,8 +58,6 @@ void main() {
             body: anyNamed('body')))
         .thenThrow(HttpError.notFound);
 
-    final params = AutenticationParams(
-        email: faker.internet.email(), password: faker.internet.password());
     final future = sut.auth(params);
 
     expect(future, throwsA(DomainError.unexpected));
@@ -68,24 +70,38 @@ void main() {
             body: anyNamed('body')))
         .thenThrow(HttpError.serverError);
 
-    final params = AutenticationParams(
-        email: faker.internet.email(), password: faker.internet.password());
     final future = sut.auth(params);
 
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('shuld throw InvalidCredentialsError  if httpClient return 401', () async {
+  test('shuld throw InvalidCredentialsError  if httpClient return 401',
+      () async {
     when(httpClient.request(
             url: anyNamed('url'),
             method: anyNamed('method'),
             body: anyNamed('body')))
         .thenThrow(HttpError.unauthorized);
 
-    final params = AutenticationParams(
-        email: faker.internet.email(), password: faker.internet.password());
     final future = sut.auth(params);
 
     expect(future, throwsA(DomainError.invalidCredentials));
+  });
+
+  test('shuld return an Account if httpClient return 20', () async {
+    final accessToken = faker.guid.guid();
+
+    when(httpClient.request(
+            url: anyNamed('url'),
+            method: anyNamed('method'),
+            body: anyNamed('body')))
+        .thenAnswer((_) async => {
+              'accessToken': accessToken,
+              'name': faker.person.name(),
+            });
+
+    final account = await sut.auth(params) ?? AccountEntity('null');
+
+    expect(account.token, accessToken);
   });
 }
