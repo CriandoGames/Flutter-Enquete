@@ -1,38 +1,10 @@
-import 'dart:convert';
-
-import 'package:enquete/data/http/http.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
 
-class HttpAdapter implements HttpClient {
-  final GetConnect client;
-  const HttpAdapter(this.client);
+import 'package:enquete/infra/http/http.dart';
 
-  Future<Map?>? request({
-    required String url,
-    String? method,
-    Map? body,
-  }) async {
-    Map<String, String> headers = const {
-      'content-type': 'application/json',
-      'accept': 'application/json'
-    };
-    try {
-      final response = await client.post(url, body, headers: headers);
-
-      if(response.statusCode == 200){
-        return response.body.isBlank ? null : jsonDecode(response.body);
-      }else if(response.statusCode == 204){
-         return null;
-      }
-     
-    } catch (e) {
-      print(e);
-    }
-  }
-}
 
 class GetConnectSpy extends Mock implements GetConnect {}
 
@@ -86,8 +58,17 @@ void main() {
       expect(response, null);
     });
 
-    test('should call post with correct data if post return 204 with data', () async {
+    test('should call post with correct data if post return 204 with data',
+        () async {
       mockResponse(204);
+      final response = await sut.request(url: url, body: body, method: 'post');
+
+      expect(response, null);
+    });
+
+      test('should call post with correct data if post return 500',
+        () async {
+      mockResponse(500);
       final response = await sut.request(url: url, body: body, method: 'post');
 
       expect(response, null);
