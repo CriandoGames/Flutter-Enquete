@@ -22,7 +22,12 @@ class HttpAdapter implements HttpClient {
     try {
       final response = await client.post(url, body, headers: headers);
 
-      return response.body.isBlank ? null : jsonDecode(response.body);
+      if(response.statusCode == 200){
+        return response.body.isBlank ? null : jsonDecode(response.body);
+      }else if(response.statusCode == 204){
+         return null;
+      }
+     
     } catch (e) {
       print(e);
     }
@@ -68,16 +73,22 @@ void main() {
 
     test('should call post with correct data if post return 200 with no data',
         () async {
-          mockResponse(200,bod: null);
+      mockResponse(200, bod: null);
       final response = await sut.request(url: url, body: null, method: 'post');
 
       expect(response, null);
     });
 
-        test('should call post with correct data if post return 204',
-        () async {
-          mockResponse(204,bod: {});
+    test('should call post with correct data if post return 204', () async {
+      mockResponse(204, bod: {});
       final response = await sut.request(url: url, body: {}, method: 'post');
+
+      expect(response, null);
+    });
+
+    test('should call post with correct data if post return 204 with data', () async {
+      mockResponse(204);
+      final response = await sut.request(url: url, body: body, method: 'post');
 
       expect(response, null);
     });
