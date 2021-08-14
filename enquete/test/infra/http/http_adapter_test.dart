@@ -73,5 +73,13 @@ void main() {
 
       expect(response, null);
     });
+
+        test('should call post with correct data if post return 204',
+        () async {
+          mockResponse(204,bod: {});
+      final response = await sut.request(url: url, body: {}, method: 'post');
+
+      expect(response, null);
+    });
   });
 }
