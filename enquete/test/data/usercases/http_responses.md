@@ -1,0 +1,9 @@
+# HTTP
+
+# Sucesso
+
+
+# Erros
+
+
+# exceção 

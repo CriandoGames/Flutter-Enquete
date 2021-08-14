@@ -1,6 +1,5 @@
 import 'package:enquete/domain/entities/entities.dart';
 import 'package:faker/faker.dart';
-import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:enquete/domain/helpers/helpers.dart';
@@ -8,6 +7,7 @@ import 'package:enquete/domain/usercases/usercases.dart';
 
 import 'package:enquete/data/http/http.dart';
 import 'package:enquete/data/usercases/usercases.dart';
+import 'package:mocktail/mocktail.dart';
 
 class HttpClientSpy extends Mock implements HttpClient {}
 
@@ -16,8 +16,13 @@ late String url;
 late RemoteAuthentication sut;
 late AutenticationParams params;
 
-PostExpectation mockRequest() => when(httpClient.request(
-    url: anyNamed('url'), method: anyNamed('method'), body: anyNamed('body')));
+mockRequest() => when(
+      () => httpClient.request(
+        url: any(named: 'url', that: isNotNull),
+        method: any(named: 'method', that: isNotNull),
+        body: any(named: 'body', that: isNotNull),
+      ),
+    );
 
 Map mockValidData() =>
     {'accessToken': faker.guid.guid(), 'name': faker.person.name()};
@@ -35,7 +40,8 @@ void main() {
 
     await sut.auth(params);
 
-    verify(httpClient.request(
+    
+    verify(() => httpClient.request(
         url: url,
         method: 'post',
         body: {'email': params.email, 'password': params.password}));
