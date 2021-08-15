@@ -2,34 +2,46 @@ import 'dart:convert';
 
 import 'package:get/get_connect/connect.dart';
 
-import '/data/http/http.dart';
+import '../../data/http/http.dart';
 
 class HttpAdapter implements HttpClient {
   final GetConnect client;
-  const HttpAdapter(this.client);
+  HttpAdapter(this.client);
 
-  Future<Map?>? request({
+  Future<Map?> request({
     required String url,
-    String? method,
+     String? method,
     Map? body,
   }) async {
-    Map<String, String> headers = const {
-      'content-type': 'application/json',
-      'accept': 'application/json'
+    final headers = {
+      'Content-Type': 'application/json',
+      'accept': 'application/json',
     };
+    
+    var response = Response(body: '', statusCode: 500);
     try {
-      final response = await client.post(url, body, headers: headers);
-      return _handleResponse(response);
-    } catch (e) {
-      print(e);
+      if (method == 'post') {
+        response = await client.post(url, body, headers: headers);
+      }
+    } catch (error) {
+      throw HttpError.serverError;
     }
+    return _handleResponse(response);
   }
 
-  Map? _handleResponse(Response response) {
+   dynamic _handleResponse(Response response) {
     if (response.statusCode == 200) {
-      return response.body.isBlank ? null : jsonDecode(response.body);
+      return response.body.isEmpty ? null : jsonDecode(response.body);
     } else if (response.statusCode == 204) {
       return null;
+    } else if (response.statusCode == 400) {
+      throw HttpError.badRequest;
+    } else if (response.statusCode == 401) {
+      throw HttpError.unauthorized;
+    } else if (response.statusCode == 404) {
+      throw HttpError.notFound;
+    } else {
+      throw HttpError.serverError;
     }
   }
 }
