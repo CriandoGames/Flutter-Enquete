@@ -3,8 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
 
-import 'package:enquete/infra/http/http.dart';
+import 'package:enquete/data/http/http.dart';
 
+import 'package:enquete/infra/http/http.dart';
 
 class GetConnectSpy extends Mock implements GetConnect {}
 
@@ -21,24 +22,23 @@ void main() {
 
   group('POST', () {
     final headers = {
-      'content-type': 'application/json',
-      'accept': 'application/json'
+      'Content-Type': 'application/json',
+      'accept': 'application/json',
     };
     var body = {'any': 'any'};
 
-    mockRequest() => when(() => client.post(url, body));
+    mockRequest() => when(() => client.post(url, body, headers: headers));
 
     void mockResponse(int statusCode, {Map? bod = const {'any': 'any'}}) {
       mockRequest()
           .thenAnswer((_) async => Response(body: bod, statusCode: statusCode));
     }
 
-    setUp() {
+    setUp(() {
       mockResponse(200);
-    }
-
+    });
     test('should call post with correct url,body,headers', () async {
-      await sut.request(url: url, method: 'post', body: body);
+      await sut.request(url: url, body: body);
 
       verify(() => client.post(url, body, headers: headers));
     });
@@ -46,14 +46,20 @@ void main() {
     test('should call post with correct data if post return 200 with no data',
         () async {
       mockResponse(200, bod: null);
-      final response = await sut.request(url: url, body: null, method: 'post');
+      final response = await sut.request(
+        url: url,
+        body: body,
+      );
 
-      expect(response, null);
+      expect(response,  throwsA(HttpError.badRequest));
     });
 
     test('should call post with correct data if post return 204', () async {
       mockResponse(204, bod: {});
-      final response = await sut.request(url: url, body: {}, method: 'post');
+      final response = await sut.request(
+        url: url,
+        body: {},
+      );
 
       expect(response, null);
     });
@@ -61,17 +67,23 @@ void main() {
     test('should call post with correct data if post return 204 with data',
         () async {
       mockResponse(204);
-      final response = await sut.request(url: url, body: body, method: 'post');
+      final response = await sut.request(
+        url: url,
+        body: body,
+      );
 
       expect(response, null);
     });
 
-      test('should call post with correct data if post return 500',
-        () async {
-      mockResponse(500);
-      final response = await sut.request(url: url, body: body, method: 'post');
-
-      expect(response, null);
+    test('should call post with correct data if post return 400', () async {
+      mockResponse(400);
+      final future = sut.request(
+        url: url,
+        body: body,
+      );
+      print('FUTURE');
+      print(future);
+      expect(future, throwsA(HttpError.badRequest));
     });
   });
 }
