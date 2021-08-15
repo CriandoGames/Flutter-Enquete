@@ -3,7 +3,10 @@ import 'package:get/get_navigation/get_navigation.dart';
 
 import '../pages/login/login_page.dart';
 
+//TODO THEMAS AINDA JUNTOS EM BREVE VAMOS SEPARA TODOS
 class App extends StatelessWidget {
+  
+
   @override
   Widget build(BuildContext context) {
     final primaryColor = Color.fromRGBO(136, 14, 79, 1);
@@ -40,7 +43,8 @@ class App extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20)),
                 textStyle: TextStyle(color: Theme.of(context).primaryColor)),
           ),
-          textButtonTheme: TextButtonThemeData(style: TextButton.styleFrom(
+          textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
             primary: primaryColor,
           ))),
       home: LoginPage(),
