@@ -7,7 +7,7 @@ import 'package:enquete/data/http/http.dart';
 
 import 'package:enquete/infra/http/http.dart';
 
-class GetConnectSpy extends Mock implements GetConnect {}
+class GetConnectSpy extends Mock implements GetConnectInterface {}
 
 void main() {
   late HttpAdapter sut;

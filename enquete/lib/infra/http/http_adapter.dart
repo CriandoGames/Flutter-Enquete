@@ -5,7 +5,7 @@ import 'package:get/get_connect/connect.dart';
 import '../../data/http/http.dart';
 
 class HttpAdapter implements HttpClient {
-  final GetConnect client;
+  final GetConnectInterface client;
   HttpAdapter(this.client);
 
   Future<Map?> request({
