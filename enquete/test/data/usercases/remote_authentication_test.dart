@@ -40,7 +40,6 @@ void main() {
 
     await sut.auth(params);
 
-    
     verify(() => httpClient.request(
         url: url,
         method: 'post',
