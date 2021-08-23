@@ -25,32 +25,9 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(body: Builder(builder: (context) {
       widget.presenter.isLoadingController!.listen((isLoadin) {
         if (isLoadin) {
-          showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (_) {
-                return SimpleDialog(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircularProgressIndicator(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'Aguarde...',
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    )
-                  ],
-                );
-              });
+          showLoading(context);
         } else {
-          if (Navigator.canPop(context)) {
-            Navigator.of(context).pop();
-          }
+          hideLoading(context);
         }
       });
 

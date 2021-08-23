@@ -15,6 +15,7 @@ late StreamController<String> passwordErrorController;
 late StreamController<String> mainErrorController;
 late StreamController<bool> isFormValidController;
 late StreamController<bool> isLoadingController;
+
 void main() {
   Future<void> loadPage(WidgetTester tester) async {
     presenter = LoginPresentSpy();
