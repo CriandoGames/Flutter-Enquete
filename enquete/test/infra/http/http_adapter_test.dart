@@ -19,7 +19,7 @@ void main() {
     url = faker.internet.httpUrl();
   });
 
-  group('POST', () {
+  /* group('POST', () {
     final headers = {
       'Content-Type': 'application/json',
       'accept': 'application/json',
@@ -84,5 +84,5 @@ void main() {
       print(future);
       //expect(future, throwsA(HttpError.badRequest));
     });
-  });
+  }); */
 }
