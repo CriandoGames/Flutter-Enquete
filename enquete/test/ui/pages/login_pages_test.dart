@@ -12,6 +12,7 @@ class LoginPresentSpy extends Mock implements LoginPresenter {}
 late LoginPresenter presenter;
 late StreamController<String> emailErrorController;
 late StreamController<String> passwordErrorController;
+late StreamController<String> mainErrorController;
 late StreamController<bool> isFormValidController;
 late StreamController<bool> isLoadingController;
 void main() {
@@ -21,6 +22,7 @@ void main() {
     passwordErrorController = StreamController<String>();
     isFormValidController = StreamController<bool>();
     isLoadingController = StreamController<bool>();
+    mainErrorController = StreamController<String>();
     final loginPage = MaterialApp(home: LoginPage(presenter));
 
     when(presenter.emailErrorStream)
@@ -28,11 +30,15 @@ void main() {
 
     when(presenter.emailErrorStream)
         .thenAnswer((_) => emailErrorController.stream);
+
     when(presenter.isLoadingController)
         .thenAnswer((_) => isLoadingController.stream);
 
-    when(presenter.isFormValidStream)
-        .thenAnswer((_) => isFormValidController.stream);
+    when(presenter.isLoadingController)
+        .thenAnswer((_) => isLoadingController.stream);
+
+    when(presenter.mainErrorController)
+        .thenAnswer((_) => mainErrorController.stream);
 
     await tester.pumpWidget(loginPage);
   }
@@ -40,6 +46,7 @@ void main() {
   tearDown(() {
     emailErrorController.close();
     passwordErrorController.close();
+    mainErrorController.close();
     isFormValidController.close();
     isLoadingController.close();
   });
@@ -176,10 +183,18 @@ void main() {
     await loadPage(tester);
     isLoadingController.add(true);
     await tester.pump();
-    
+
     isLoadingController.add(false);
     await tester.pump();
 
     expect(find.byType(CircularProgressIndicator), findsNothing);
+  });
+
+  testWidgets('should present error message if authentication fails',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+    mainErrorController.add('main error');
+    await tester.pump();
+    expect(find.text('main error'), findsOneWidget);
   });
 }

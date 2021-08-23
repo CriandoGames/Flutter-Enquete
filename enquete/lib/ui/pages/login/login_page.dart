@@ -42,6 +42,16 @@ class LoginPage extends StatelessWidget {
         }
       });
 
+      presenter.mainErrorController?.listen((error) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+            error,
+            textAlign: TextAlign.center,
+          ),
+          backgroundColor: Colors.red[900],
+        ));
+      });
+
       return SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
