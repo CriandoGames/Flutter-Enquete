@@ -31,8 +31,8 @@ void main() {
     when(presenter.emailErrorStream)
         .thenAnswer((_) => emailErrorController.stream);
 
-    when(presenter.isLoadingController)
-        .thenAnswer((_) => isLoadingController.stream);
+    when(presenter.isFormValidStream)
+        .thenAnswer((_) => isFormValidController.stream);
 
     when(presenter.isLoadingController)
         .thenAnswer((_) => isLoadingController.stream);
@@ -196,5 +196,14 @@ void main() {
     mainErrorController.add('main error');
     await tester.pump();
     expect(find.text('main error'), findsOneWidget);
+  });
+
+  testWidgets('should close streams on dispose', (WidgetTester tester) async {
+    await loadPage(tester);
+    
+  
+      addTearDown((){
+        verify(presenter.dispose()).called(1);
+      });
   });
 }
