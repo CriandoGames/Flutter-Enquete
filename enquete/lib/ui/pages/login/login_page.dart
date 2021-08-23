@@ -10,8 +10,35 @@ class LoginPage extends StatelessWidget {
   const LoginPage(this.presenter);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
+    return Scaffold(body: Builder(builder: (context) {
+      presenter.isLoadingController!.listen((isLoadin) {
+        if (isLoadin) {
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) {
+                return SimpleDialog(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'Aguarde...',
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    )
+                  ],
+                );
+              });
+        }
+      });
+
+      return SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -77,7 +104,7 @@ class LoginPage extends StatelessWidget {
             )
           ],
         ),
-      ),
-    );
+      );
+    }));
   }
 }
