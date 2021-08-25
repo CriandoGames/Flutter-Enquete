@@ -1,15 +1,20 @@
+import 'package:equatable/equatable.dart';
+
 import '/domain/entities/entities.dart';
 
 abstract class Authentication {
-  Future<AccountEntity> auth(AutenticationParams params);
+  Future<AccountEntity>? auth(AuthenticationParams params);
 }
 
-class AutenticationParams {
+class AuthenticationParams extends Equatable {
   final String email;
   final String password;
 
-  AutenticationParams({
+  AuthenticationParams({
     required this.email,
     required this.password,
   });
+
+  @override
+  List<Object?> get props => [email, password];
 }

@@ -1,3 +1,5 @@
+import 'package:enquete/domain/entities/account_entity.dart';
+import 'package:enquete/domain/usercases/authentication.dart';
 import 'package:faker/faker.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -7,11 +9,14 @@ import 'package:enquete/ui/presentation/protocols/validation.dart';
 
 class ValidationSpy extends Mock implements Validation {}
 
+class AuthenticationSpy extends Mock implements Authentication {}
+
 void main() {
   late ValidationSpy validation;
   late StreamLoginPresenter sut;
   late String email;
   late String password;
+  late AuthenticationSpy authentication;
 
   PostExpectation mockValidationCall({String? field}) =>
       when(validation.validation(field: field ?? 'field', email: 'value'));
@@ -20,12 +25,23 @@ void main() {
     mockValidationCall(field: field).thenReturn(value);
   }
 
+  PostExpectation mockAuthenticationCall() => when(authentication
+      .auth(AuthenticationParams(email: email, password: password)));
+
+  void mockAuthentication() {
+    mockAuthenticationCall()
+        .thenAnswer((_) async => AccountEntity(faker.guid.guid()));
+  }
+
   setUp(() {
     validation = ValidationSpy();
-    sut = StreamLoginPresenter(validation: validation);
+    authentication = AuthenticationSpy();
+    sut = StreamLoginPresenter(
+        validation: validation, authentication: authentication);
     email = faker.internet.email();
     password = faker.internet.password();
     mockValidation();
+    mockAuthentication();
   });
 
   test('should call validation with correct email', () {
@@ -77,8 +93,7 @@ void main() {
   test('should emit password error if validation with fails', () {
     mockValidation(value: 'error');
 
-    sut.emailErrorStream
-        .listen(expectAsync1((error) => {expect(error, null)}));
+    sut.emailErrorStream.listen(expectAsync1((error) => {expect(error, null)}));
     sut.passwordErrorStream
         .listen(expectAsync1((error) => {expect(error, null)}));
     sut.isFormValidStream
@@ -88,5 +103,22 @@ void main() {
     sut.validateEmail(password);
   });
 
-  
+  test('should call Authentication with correct values', () async {
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+    await sut.auth();
+
+    verify(authentication
+            .auth(AuthenticationParams(email: email, password: password)))
+        .called(1);
+  });
+
+  test('should emit correct events on Authentication succeed', () async {
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+
+    expectLater(sut.isLoadingStream, emitsInAnyOrder([true, false]));
+
+    await sut.auth();
+  });
 }

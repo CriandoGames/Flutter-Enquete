@@ -14,7 +14,7 @@ class HttpClientSpy extends Mock implements HttpClient {}
 late HttpClientSpy httpClient;
 late String url;
 late RemoteAuthentication sut;
-late AutenticationParams params;
+late AuthenticationParams params;
 
 mockRequest() => when(
       () => httpClient.request(
@@ -31,7 +31,7 @@ void main() {
     httpClient = HttpClientSpy();
     url = faker.internet.httpUrl();
     sut = RemoteAuthentication(httpClient: httpClient, url: url);
-    params = AutenticationParams(
+    params = AuthenticationParams(
         email: faker.internet.email(), password: faker.internet.password());
   });
 

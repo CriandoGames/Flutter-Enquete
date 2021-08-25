@@ -12,7 +12,7 @@ class RemoteAuthentication {
 
   const RemoteAuthentication({required this.httpClient, required this.url});
 
-  Future<AccountEntity?>? auth(AutenticationParams params) async {
+  Future<AccountEntity?>? auth(AuthenticationParams params) async {
     final body = RemoteAutenticationParams.fromDomain(params).toJson();
     try {
       final httpResponse =
@@ -37,7 +37,7 @@ class RemoteAutenticationParams {
     required this.password,
   });
 
-  factory RemoteAutenticationParams.fromDomain(AutenticationParams entity) =>
+  factory RemoteAutenticationParams.fromDomain(AuthenticationParams entity) =>
       RemoteAutenticationParams(email: entity.email, password: entity.password);
 
   Map toJson() => {'email': email, 'password': password};
