@@ -65,11 +65,26 @@ void main() {
   test('should call validation with password', () {
     mockValidation(value: 'error');
 
-    sut.passwordErrorStream.listen(expectAsync1((error) => {expect(error, null)}));
+    sut.passwordErrorStream
+        .listen(expectAsync1((error) => {expect(error, null)}));
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => {expect(isValid, false)}));
 
     sut.validateEmail(password);
+    sut.validateEmail(password);
+  });
+
+  test('should emit password error if validation with fails', () {
+    mockValidation(value: 'error');
+
+    sut.emailErrorStream
+        .listen(expectAsync1((error) => {expect(error, null)}));
+    sut.passwordErrorStream
+        .listen(expectAsync1((error) => {expect(error, null)}));
+    sut.isFormValidStream
+        .listen(expectAsync1((isValid) => {expect(isValid, false)}));
+
+    sut.validateEmail(email);
     sut.validateEmail(password);
   });
 }
